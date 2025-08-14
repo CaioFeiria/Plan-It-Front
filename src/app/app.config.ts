@@ -16,7 +16,17 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
       providePrimeNG({
           theme: {
-              preset: Aura
+              preset: Aura,
+              options: {
+                darkModeSelector: '.my-app-dark',
+                ripple: true, // animação para botões
+                zIndex: {
+                  modal: 1100,    // dialog, sidebar
+                  overlay: 1000,  // dropdown, overlaypanel
+                  menu: 1000,     // overlay menus
+                  tooltip: 1100   // tooltip
+                },
+              },
           }
       }),
   ]
