@@ -1,13 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { ToolbarModule } from 'primeng/toolbar';
-import { AvatarModule } from 'primeng/avatar';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
-  imports: [CommonModule, ToolbarModule, ButtonModule, AvatarModule],
+  imports: [CommonModule],
   templateUrl: './toolbar.html',
   styleUrl: './toolbar.css',
 })
-export class Toolbar {}
+export class Toolbar {
+  @Output() menuToggle = new EventEmitter<void>();
+
+  onMenuToggle() {
+    this.menuToggle.emit();
+  }
+}
