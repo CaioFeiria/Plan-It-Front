@@ -1,0 +1,163 @@
+<div class="p-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Apontamentos</h1>
+    <button 
+      (click)="criarApontamento()"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors duration-200">
+      <i class="pi pi-plus"></i>
+      <span>Novo Apontamento</span>
+    </button>
+  </div>
+
+  <!-- Data Table -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <p-table 
+      [value]="apontamentos" 
+      [paginator]="true" 
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} apontamentos"
+      [rowsPerPageOptions]="[5, 10, 25]"
+      styleClass="p-datatable-sm">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">
+            ID <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="usuario.nome">
+            Usuário <p-sortIcon field="usuario.nome"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tarefa.nome">
+            Tarefa <p-sortIcon field="tarefa.nome"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tarefa.prioridade">
+            Prioridade <p-sortIcon field="tarefa.prioridade"></p-sortIcon>
+          </th>
+          <th pSortableColumn="dataApontamento">
+            Data Apontamento <p-sortIcon field="dataApontamento"></p-sortIcon>
+          </th>
+          <th style="width: 120px;">Ações</th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body" let-apontamento>
+        <tr>
+          <td>{{ apontamento.id }}</td>
+          <td>
+            <div class="flex items-center gap-2">
+              <i class="pi pi-user text-gray-500"></i>
+              <span class="font-medium">{{ apontamento.usuario.nome }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="flex items-center gap-2">
+              <i class="pi pi-check-square text-gray-500"></i>
+              <span>{{ apontamento.tarefa.nome }}</span>
+            </div>
+          </td>
+          <td>
+            <span 
+              class="px-2 py-1 rounded-full text-xs font-medium"
+              [ngClass]="{
+                'bg-gray-100 text-gray-800': apontamento.tarefa.prioridade === 'BAIXA',
+                'bg-yellow-100 text-yellow-800': apontamento.tarefa.prioridade === 'MEDIA',
+                'bg-orange-100 text-orange-800': apontamento.tarefa.prioridade === 'ALTA',
+                'bg-red-100 text-red-800': apontamento.tarefa.prioridade === 'URGENTE'
+              }">
+              {{ apontamento.tarefa.prioridade || 'Não definida' }}
+            </span>
+          </td>
+          <td>
+            <span class="text-sm text-gray-600">
+              {{ apontamento.dataApontamento | date:'dd/MM/yyyy HH:mm' }}
+            </span>
+          </td>
+          <td>
+            <div class="flex gap-2">
+              <button 
+                (click)="editarApontamento(apontamento)"
+                class="p-1 text-blue-600 hover:bg-blue-50 rounded transition-colors duration-200"
+                pTooltip="Editar">
+                <i class="pi pi-pencil"></i>
+              </button>
+              <button 
+                (click)="excluirApontamento(apontamento)"
+                class="p-1 text-red-600 hover:bg-red-50 rounded transition-colors duration-200"
+                pTooltip="Excluir">
+                <i class="pi pi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="text-center py-8 text-gray-500">
+            <i class="pi pi-link text-4xl mb-2 block"></i>
+            Nenhum apontamento encontrado
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Modal de Apontamento -->
+  <div *ngIf="mostrarModalApontamento" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+      <div class="p-6">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">
+          {{ modoEdicao ? 'Editar Apontamento' : 'Novo Apontamento' }}
+        </h3>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Selecionar Tarefa:
+          </label>
+          <select 
+            (change)="onTarefaChange($event)"
+            [value]="tarefaSelecionada?.id || ''"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="">Escolha uma tarefa</option>
+            <option *ngFor="let tarefa of tarefas" [value]="tarefa.id">
+              {{ tarefa.nome }} - {{ tarefa.prioridade || 'Sem prioridade' }}
+            </option>
+          </select>
+        </div>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Selecionar Usuário:
+          </label>
+          <select 
+            (change)="onUsuarioChange($event)"
+            [value]="usuarioSelecionado?.id || ''"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="">Escolha um usuário</option>
+            <option *ngFor="let usuario of usuarios" [value]="usuario.id">
+              {{ usuario.nome }} - {{ usuario.email }}
+            </option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="px-6 py-4 bg-gray-50 rounded-b-lg flex justify-end gap-2">
+        <button 
+          type="button" 
+          (click)="fecharModalApontamento()"
+          class="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
+          Cancelar
+        </button>
+        <button 
+          type="button" 
+          (click)="salvarApontamento()"
+          [disabled]="!tarefaSelecionada || !usuarioSelecionado"
+          class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-lg transition-colors duration-200">
+          {{ modoEdicao ? 'Salvar Alterações' : 'Criar Apontamento' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

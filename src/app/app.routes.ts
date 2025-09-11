@@ -3,6 +3,7 @@ import { Layout } from './components/layout/layout';
 import { UsuariosComponent } from './pages/usuarios/usuarios';
 import { ProjetosComponent } from './pages/projetos/projetos';
 import { TarefasComponent } from './pages/tarefas/tarefas';
+import { ApontamentosComponent } from './pages/apontamentos/apontamentos';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -31,6 +32,7 @@ export const routes: Routes = [
       { path: 'tarefas', component: TarefasComponent },
       { path: 'tarefas/nova', loadComponent: () => import('./pages/tarefas/tarefas-form/tarefas-form').then(m => m.TarefasFormComponent) },
       { path: 'tarefas/editar/:id', loadComponent: () => import('./pages/tarefas/tarefas-form/tarefas-form').then(m => m.TarefasFormComponent) },
+      { path: 'apontamentos', component: ApontamentosComponent },
     ],
   },
   // Redirecionamento padrão para login
