@@ -1,0 +1,87 @@
+<div class="p-6">
+  <!-- Header -->
+  <div class="flex items-center gap-4 mb-6">
+    <button 
+      (click)="voltar()"
+      class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+      <i class="pi pi-arrow-left text-gray-600"></i>
+    </button>
+    <h1 class="text-2xl font-bold text-gray-800">
+      {{ isEditando ? 'Editar Usuário' : 'Novo Usuário' }}
+    </h1>
+  </div>
+
+  <!-- Form Card -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <form [formGroup]="usuarioForm" (ngSubmit)="salvar()" class="space-y-6">
+      
+      <!-- Nome -->
+      <div class="space-y-2">
+        <label for="nome" class="block text-sm font-medium text-gray-700">
+          Nome *
+        </label>
+        <input
+          id="nome"
+          type="text"
+          formControlName="nome"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+          [class.border-red-500]="usuarioForm.get('nome')?.invalid && usuarioForm.get('nome')?.touched"
+          placeholder="Digite o nome do usuário">
+        
+        <div *ngIf="usuarioForm.get('nome')?.invalid && usuarioForm.get('nome')?.touched" 
+             class="text-red-500 text-sm">
+          <span *ngIf="usuarioForm.get('nome')?.errors?.['required']">
+            Nome é obrigatório
+          </span>
+          <span *ngIf="usuarioForm.get('nome')?.errors?.['minlength']">
+            Nome deve ter pelo menos 3 caracteres
+          </span>
+          <span *ngIf="usuarioForm.get('nome')?.errors?.['maxlength']">
+            Nome deve ter no máximo 100 caracteres
+          </span>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="space-y-2">
+        <label for="email" class="block text-sm font-medium text-gray-700">
+          Email *
+        </label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+          [class.border-red-500]="usuarioForm.get('email')?.invalid && usuarioForm.get('email')?.touched"
+          placeholder="Digite o email do usuário">
+        
+        <div *ngIf="usuarioForm.get('email')?.invalid && usuarioForm.get('email')?.touched" 
+             class="text-red-500 text-sm">
+          <span *ngIf="usuarioForm.get('email')?.errors?.['required']">
+            Email é obrigatório
+          </span>
+          <span *ngIf="usuarioForm.get('email')?.errors?.['email']">
+            Email inválido
+          </span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+        <button
+          type="button"
+          (click)="voltar()"
+          class="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
+          Cancelar
+        </button>
+        
+        <button
+          type="submit"
+          [disabled]="usuarioForm.invalid"
+          class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg transition-colors duration-200">
+          <span>{{ isEditando ? 'Atualizar' : 'Criar' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
