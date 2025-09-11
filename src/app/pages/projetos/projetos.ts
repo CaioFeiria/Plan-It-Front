@@ -78,4 +78,42 @@ export class ProjetosComponent implements OnInit {
       }
     });
   }
+
+  // Métodos para emojis e cores dos projetos
+  getProjectEmoji(id: number): string {
+    const emojis = ['🚀', '💼', '🎯', '📊', '🔧', '🌟', '⚡', '🎨', '📱', '🌐', '🔬', '🎪', '🏗️', '📈', '🎭', '🔍'];
+    return emojis[id % emojis.length];
+  }
+
+  getProjectColor(emojiOrId: string | number): string {
+    const colors = [
+      'bg-blue-100 text-blue-600',
+      'bg-green-100 text-green-600', 
+      'bg-purple-100 text-purple-600',
+      'bg-orange-100 text-orange-600',
+      'bg-pink-100 text-pink-600',
+      'bg-indigo-100 text-indigo-600',
+      'bg-yellow-100 text-yellow-600',
+      'bg-red-100 text-red-600',
+      'bg-teal-100 text-teal-600',
+      'bg-cyan-100 text-cyan-600',
+      'bg-lime-100 text-lime-600',
+      'bg-amber-100 text-amber-600',
+      'bg-emerald-100 text-emerald-600',
+      'bg-violet-100 text-violet-600',
+      'bg-rose-100 text-rose-600',
+      'bg-sky-100 text-sky-600'
+    ];
+    
+    if (typeof emojiOrId === 'string') {
+      // Se for emoji, usar hash do emoji para determinar cor
+      const emojiHash = emojiOrId.split('').reduce((hash, char) => {
+        return hash + char.charCodeAt(0);
+      }, 0);
+      return colors[emojiHash % colors.length];
+    } else {
+      // Se for ID, usar o ID diretamente
+      return colors[emojiOrId % colors.length];
+    }
+  }
 }
