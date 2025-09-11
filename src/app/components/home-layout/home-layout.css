@@ -1,0 +1,25 @@
+/* Estilos específicos para o layout da Home */
+.h-screen {
+  height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+/* Garantir que o conteúdo ocupe toda a largura */
+main {
+  width: 100%;
+}

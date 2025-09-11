@@ -1,16 +1,19 @@
 <div class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm">
-  <!-- Left side: Menu button + Logo -->
+  <!-- Left side: Menu button + Logo + Home button -->
   <div class="flex items-center gap-4">
     <button 
+      *ngIf="showMenuButton"
       (click)="onMenuToggle()"
       class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200">
       <i class="pi pi-bars text-gray-600"></i>
     </button>
     
-    <div class="flex items-center gap-3">
+    <button 
+      (click)="goToHome()"
+      class="flex items-center gap-3 hover:bg-gray-50 px-3 py-2 rounded-lg transition-colors duration-200">
       <i class="pi pi-calendar text-2xl text-blue-600"></i>
       <h1 class="text-xl font-bold text-gray-800">Plan-It</h1>
-    </div>
+    </button>
   </div>
 
   <!-- Right side: User info + Logout -->

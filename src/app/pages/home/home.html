@@ -1,0 +1,125 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+  <!-- Hero Section -->
+  <div class="relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          {{ greeting }}! 👋
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-600 mb-4">
+          Bem-vindo ao <span class="text-blue-600 font-semibold">PlanIt</span>
+        </p>
+        <p class="text-lg text-gray-500 mb-8">
+          {{ getCurrentDate() }}
+        </p>
+        <div class="inline-flex items-center px-4 py-2 bg-white rounded-full shadow-lg border border-gray-200">
+          <i class="pi pi-calendar text-blue-600 mr-2"></i>
+          <span class="text-gray-700 font-medium">Sistema de Gestão de Projetos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Cards Section -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">
+        Acesse as Funcionalidades
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Escolha uma das opções abaixo para começar a gerenciar seus projetos, tarefas e equipe
+      </p>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div 
+        *ngFor="let card of navigationCards" 
+        (click)="navigateTo(card.route)"
+        class="group cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+        
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 h-full flex flex-col items-center text-center group-hover:shadow-2xl transition-shadow duration-300">
+          <!-- Icon -->
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
+               [ngClass]="card.bgColor">
+            <i [ngClass]="[card.icon, card.color, 'text-2xl']"></i>
+          </div>
+          
+          <!-- Title -->
+          <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors duration-300">
+            {{ card.title }}
+          </h3>
+          
+          <!-- Description -->
+          <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
+            {{ card.description }}
+          </p>
+          
+          <!-- Arrow -->
+          <div class="flex items-center text-gray-400 group-hover:text-gray-600 transition-colors duration-300">
+            <span class="text-sm font-medium mr-2">Acessar</span>
+            <i class="pi pi-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="bg-white border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+          Recursos do Sistema
+        </h2>
+        <p class="text-lg text-gray-600">
+          Tudo que você precisa para gerenciar seus projetos com eficiência
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="text-center">
+          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="pi pi-users text-blue-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Gestão de Usuários</h3>
+          <p class="text-gray-600 text-sm">
+            Controle completo sobre usuários, permissões e atribuições de tarefas
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="text-center">
+          <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="pi pi-check-square text-green-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Controle de Tarefas</h3>
+          <p class="text-gray-600 text-sm">
+            Crie, organize e acompanhe o progresso de todas as suas tarefas
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="text-center">
+          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="pi pi-chart-line text-purple-600 text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Relatórios e Análises</h3>
+          <p class="text-gray-600 text-sm">
+            Visualize métricas e acompanhe o desempenho da sua equipe
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="bg-gray-900 text-white py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-gray-400">
+        © 2024 PlanIt - Sistema de Gestão de Projetos. Todos os direitos reservados.
+      </p>
+    </div>
+  </div>
+</div>

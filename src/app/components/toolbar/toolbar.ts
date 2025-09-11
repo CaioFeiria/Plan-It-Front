@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class Toolbar implements OnInit {
   @Output() menuToggle = new EventEmitter<void>();
+  @Input() showMenuButton: boolean = true;
   usuario: any = null;
 
   constructor(
@@ -24,6 +25,10 @@ export class Toolbar implements OnInit {
 
   onMenuToggle() {
     this.menuToggle.emit();
+  }
+
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 
   logout() {
