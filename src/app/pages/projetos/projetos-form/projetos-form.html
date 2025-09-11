@@ -1,0 +1,90 @@
+<div class="p-6">
+  <!-- Header -->
+  <div class="flex items-center gap-4 mb-6">
+    <button 
+      (click)="voltar()"
+      class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+      <i class="pi pi-arrow-left text-gray-600"></i>
+    </button>
+    <h1 class="text-2xl font-bold text-gray-800">
+      {{ isEditando ? 'Editar Projeto' : 'Novo Projeto' }}
+    </h1>
+  </div>
+
+  <!-- Form Card -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <form [formGroup]="projetoForm" (ngSubmit)="salvar()" class="space-y-6">
+      
+      <!-- Nome -->
+      <div class="space-y-2">
+        <label for="nome" class="block text-sm font-medium text-gray-700">
+          Nome *
+        </label>
+        <input
+          id="nome"
+          type="text"
+          formControlName="nome"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+          [class.border-red-500]="projetoForm.get('nome')?.invalid && projetoForm.get('nome')?.touched"
+          placeholder="Digite o nome do projeto">
+        
+        <div *ngIf="projetoForm.get('nome')?.invalid && projetoForm.get('nome')?.touched" 
+             class="text-red-500 text-sm">
+          <span *ngIf="projetoForm.get('nome')?.errors?.['required']">
+            Nome é obrigatório
+          </span>
+          <span *ngIf="projetoForm.get('nome')?.errors?.['minlength']">
+            Nome deve ter pelo menos 3 caracteres
+          </span>
+          <span *ngIf="projetoForm.get('nome')?.errors?.['maxlength']">
+            Nome deve ter no máximo 100 caracteres
+          </span>
+        </div>
+      </div>
+
+      <!-- Descrição -->
+      <div class="space-y-2">
+        <label for="descricao" class="block text-sm font-medium text-gray-700">
+          Descrição *
+        </label>
+        <textarea
+          id="descricao"
+          formControlName="descricao"
+          rows="4"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 resize-none"
+          [class.border-red-500]="projetoForm.get('descricao')?.invalid && projetoForm.get('descricao')?.touched"
+          placeholder="Digite a descrição do projeto"></textarea>
+        
+        <div *ngIf="projetoForm.get('descricao')?.invalid && projetoForm.get('descricao')?.touched" 
+             class="text-red-500 text-sm">
+          <span *ngIf="projetoForm.get('descricao')?.errors?.['required']">
+            Descrição é obrigatória
+          </span>
+          <span *ngIf="projetoForm.get('descricao')?.errors?.['minlength']">
+            Descrição deve ter pelo menos 3 caracteres
+          </span>
+          <span *ngIf="projetoForm.get('descricao')?.errors?.['maxlength']">
+            Descrição deve ter no máximo 255 caracteres
+          </span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+        <button
+          type="button"
+          (click)="voltar()"
+          class="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
+          Cancelar
+        </button>
+        
+        <button
+          type="submit"
+          [disabled]="projetoForm.invalid"
+          class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg transition-colors duration-200">
+          <span>{{ isEditando ? 'Atualizar' : 'Criar' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
