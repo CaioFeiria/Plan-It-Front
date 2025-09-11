@@ -1,0 +1,136 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <!-- Logo/Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-xl mb-4">
+        <i class="pi pi-check-circle text-white text-2xl"></i>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">PlanIt</h1>
+      <p class="text-gray-600">Gerencie suas tarefas de forma inteligente</p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Bem-vindo de volta!</h2>
+        <p class="text-gray-600">Faça login para continuar</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        
+        <!-- Email -->
+        <div class="space-y-2">
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            Email
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="pi pi-envelope text-gray-400"></i>
+            </div>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+              [class.border-red-500]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+              placeholder="seu@email.com">
+          </div>
+          
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" 
+               class="text-red-500 text-sm">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']">
+              Email é obrigatório
+            </span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">
+              Email inválido
+            </span>
+          </div>
+        </div>
+
+        <!-- Senha -->
+        <div class="space-y-2">
+          <label for="senha" class="block text-sm font-medium text-gray-700">
+            Senha
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="pi pi-lock text-gray-400"></i>
+            </div>
+            <input
+              id="senha"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="senha"
+              class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+              [class.border-red-500]="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched"
+              placeholder="Sua senha">
+            <button
+              type="button"
+              (click)="togglePassword()"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center">
+              <i [class]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'" class="text-gray-400 hover:text-gray-600"></i>
+            </button>
+          </div>
+          
+          <div *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched" 
+               class="text-red-500 text-sm">
+            <span *ngIf="loginForm.get('senha')?.errors?.['required']">
+              Senha é obrigatória
+            </span>
+            <span *ngIf="loginForm.get('senha')?.errors?.['minlength']">
+              Senha deve ter pelo menos 6 caracteres
+            </span>
+          </div>
+        </div>
+
+        <!-- Lembrar-me e Esqueci a senha -->
+        <div class="flex items-center justify-between">
+          <label class="flex items-center">
+            <input
+              type="checkbox"
+              formControlName="lembrarMe"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+            <span class="ml-2 text-sm text-gray-700">Lembrar-me</span>
+          </label>
+          
+          <a href="#" class="text-sm text-blue-600 hover:text-blue-500 transition-colors duration-200">
+            Esqueci minha senha
+          </a>
+        </div>
+
+        <!-- Botão de Login -->
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid || isLoading"
+          class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center">
+          <i *ngIf="isLoading" class="pi pi-spin pi-spinner mr-2"></i>
+          <span>{{ isLoading ? 'Entrando...' : 'Entrar' }}</span>
+        </button>
+
+        <!-- Divider -->
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">ou</span>
+          </div>
+        </div>
+
+        <!-- Link para Registro -->
+        <div class="text-center">
+          <span class="text-gray-600">Não tem uma conta? </span>
+          <a 
+            routerLink="/auth/register" 
+            class="text-blue-600 hover:text-blue-500 font-medium transition-colors duration-200">
+            Criar conta
+          </a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-8 text-gray-500 text-sm">
+      <p>&copy; 2024 PlanIt. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</div>

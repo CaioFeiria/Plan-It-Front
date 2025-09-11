@@ -1,0 +1,209 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <!-- Logo/Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-xl mb-4">
+        <i class="pi pi-check-circle text-white text-2xl"></i>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">PlanIt</h1>
+      <p class="text-gray-600">Gerencie suas tarefas de forma inteligente</p>
+    </div>
+
+    <!-- Register Card -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Criar conta</h2>
+        <p class="text-gray-600">Preencha os dados para começar</p>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        
+        <!-- Nome -->
+        <div class="space-y-2">
+          <label for="nome" class="block text-sm font-medium text-gray-700">
+            Nome completo
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="pi pi-user text-gray-400"></i>
+            </div>
+            <input
+              id="nome"
+              type="text"
+              formControlName="nome"
+              class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+              [class.border-red-500]="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched"
+              placeholder="Seu nome completo">
+          </div>
+          
+          <div *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched" 
+               class="text-red-500 text-sm">
+            <span *ngIf="registerForm.get('nome')?.errors?.['required']">
+              Nome é obrigatório
+            </span>
+            <span *ngIf="registerForm.get('nome')?.errors?.['minlength']">
+              Nome deve ter pelo menos 3 caracteres
+            </span>
+            <span *ngIf="registerForm.get('nome')?.errors?.['maxlength']">
+              Nome deve ter no máximo 100 caracteres
+            </span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="space-y-2">
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            Email
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="pi pi-envelope text-gray-400"></i>
+            </div>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+              [class.border-red-500]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+              placeholder="seu@email.com">
+          </div>
+          
+          <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" 
+               class="text-red-500 text-sm">
+            <span *ngIf="registerForm.get('email')?.errors?.['required']">
+              Email é obrigatório
+            </span>
+            <span *ngIf="registerForm.get('email')?.errors?.['email']">
+              Email inválido
+            </span>
+          </div>
+        </div>
+
+        <!-- Senha -->
+        <div class="space-y-2">
+          <label for="senha" class="block text-sm font-medium text-gray-700">
+            Senha
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="pi pi-lock text-gray-400"></i>
+            </div>
+            <input
+              id="senha"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="senha"
+              class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+              [class.border-red-500]="registerForm.get('senha')?.invalid && registerForm.get('senha')?.touched"
+              placeholder="Mínimo 6 caracteres">
+            <button
+              type="button"
+              (click)="togglePassword()"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center">
+              <i [class]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'" class="text-gray-400 hover:text-gray-600"></i>
+            </button>
+          </div>
+          
+          <div *ngIf="registerForm.get('senha')?.invalid && registerForm.get('senha')?.touched" 
+               class="text-red-500 text-sm">
+            <span *ngIf="registerForm.get('senha')?.errors?.['required']">
+              Senha é obrigatória
+            </span>
+            <span *ngIf="registerForm.get('senha')?.errors?.['minlength']">
+              Senha deve ter pelo menos 6 caracteres
+            </span>
+          </div>
+        </div>
+
+        <!-- Confirmar Senha -->
+        <div class="space-y-2">
+          <label for="confirmarSenha" class="block text-sm font-medium text-gray-700">
+            Confirmar senha
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="pi pi-lock text-gray-400"></i>
+            </div>
+            <input
+              id="confirmarSenha"
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              formControlName="confirmarSenha"
+              class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+              [class.border-red-500]="registerForm.get('confirmarSenha')?.invalid && registerForm.get('confirmarSenha')?.touched"
+              placeholder="Confirme sua senha">
+            <button
+              type="button"
+              (click)="toggleConfirmPassword()"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center">
+              <i [class]="showConfirmPassword ? 'pi pi-eye-slash' : 'pi pi-eye'" class="text-gray-400 hover:text-gray-600"></i>
+            </button>
+          </div>
+          
+          <div *ngIf="registerForm.get('confirmarSenha')?.invalid && registerForm.get('confirmarSenha')?.touched" 
+               class="text-red-500 text-sm">
+            <span *ngIf="registerForm.get('confirmarSenha')?.errors?.['required']">
+              Confirmação de senha é obrigatória
+            </span>
+            <span *ngIf="registerForm.get('confirmarSenha')?.errors?.['mismatch']">
+              As senhas não coincidem
+            </span>
+          </div>
+        </div>
+
+        <!-- Termos e Condições -->
+        <div class="flex items-start">
+          <input
+            type="checkbox"
+            formControlName="aceitarTermos"
+            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1">
+          <label class="ml-2 text-sm text-gray-700">
+            Eu aceito os 
+            <a href="#" class="text-blue-600 hover:text-blue-500">termos de uso</a> 
+            e a 
+            <a href="#" class="text-blue-600 hover:text-blue-500">política de privacidade</a>
+          </label>
+        </div>
+        
+        <div *ngIf="registerForm.get('aceitarTermos')?.invalid && registerForm.get('aceitarTermos')?.touched" 
+             class="text-red-500 text-sm">
+          <span *ngIf="registerForm.get('aceitarTermos')?.errors?.['required']">
+            Você deve aceitar os termos para continuar
+          </span>
+        </div>
+
+        <!-- Botão de Registro -->
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid || isLoading"
+          class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center">
+          <i *ngIf="isLoading" class="pi pi-spin pi-spinner mr-2"></i>
+          <span>{{ isLoading ? 'Criando conta...' : 'Criar conta' }}</span>
+        </button>
+
+        <!-- Divider -->
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">ou</span>
+          </div>
+        </div>
+
+        <!-- Link para Login -->
+        <div class="text-center">
+          <span class="text-gray-600">Já tem uma conta? </span>
+          <a 
+            routerLink="/auth/login" 
+            class="text-blue-600 hover:text-blue-500 font-medium transition-colors duration-200">
+            Fazer login
+          </a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-8 text-gray-500 text-sm">
+      <p>&copy; 2024 PlanIt. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</div>
